@@ -16,23 +16,27 @@ main = do
    print $ part2 input
    pure ()
 
-parse :: String -> [[Int]]
-parse = map parseNums . lines
+parse :: String -> [Assignment]
+parse = map (assignment . parseNums) . lines
+   where
+   assignment l
+      | [a,b,c,d] <- l = (a,b,c,d)
+      | otherwise = error "illegal assignment"
+
+type Assignment = (Int,Int,Int,Int)
 
 -- part 1
 
-part1 :: [[Int]] -> Int
+part1 :: [Assignment] -> Int
 part1 = length . filter contained
 
-contained :: [Int] -> Bool
-contained [a,b,c,d] = and [a <= c,b >= d] || and [a >= c,b <= d]
-contained _ = error "illegal assignment"
+contained :: Assignment -> Bool
+contained (a,b,c,d) = a <= c && b >= d || a >= c && b <= d
 
 -- part 2
 
-part2 :: [[Int]] -> Int
+part2 :: [Assignment] -> Int
 part2 = length . filter overlap
 
-overlap :: [Int] -> Bool
-overlap [a,b,c,d] = not . null $ [a..b] ∩ [c..d]
-overlap _ = error "illegal assignment"
+overlap :: Assignment -> Bool
+overlap (a,b,c,d) = not . null $ [a..b] ∩ [c..d]
