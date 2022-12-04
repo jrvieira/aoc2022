@@ -19,8 +19,14 @@ main = do
    pure ()
 
 parse :: String -> [Game]
-parse = map (\[a,' ',b] -> uncurry Game $ (charToHand a,b)) . lines
+parse = map game . lines
    where
+
+   game :: String -> Game
+   game s
+      | [a,' ',b] <- s = uncurry Game $ (charToHand a,b)
+      | otherwise      = error "invalid line"
+
    charToHand :: Char -> Hand
    charToHand c
       | 'A' <- c = Rock

@@ -28,6 +28,7 @@ type Rucksack = [Char]
 part1 :: [Rucksack] -> Int
 part1 = sum . map (priority . head . uncurry (∩) . rucksack)
 
+rucksack :: [Char] -> ([Char],[Char])
 rucksack l = splitAt (div (length l) 2) l
 
 priority :: Char -> Int
