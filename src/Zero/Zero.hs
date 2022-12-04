@@ -33,10 +33,10 @@ total = [minBound..]
 
 -- bounded enum
 next :: (Eq a, Enum a, Bounded a) => a -> a
-next a = if a == maxBound then maxBound else succ a
+next a = if a == maxBound then a else succ a
 
 prev :: (Eq a, Enum a, Bounded a) => a -> a
-prev a = if a == minBound then minBound else pred a
+prev a = if a == minBound then a else pred a
 
 -- cycle through enums
 forw :: (Eq a, Enum a, Bounded a) => a -> a
