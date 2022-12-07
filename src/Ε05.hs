@@ -56,4 +56,4 @@ part2 = IntMap.elems . IntMap.mapMaybe listToMaybe . uncurry rearrange
    rearrange m p
       | null p = m
       | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
-   | otherwise = error "invalid move"
+      | otherwise = error "invalid move"
