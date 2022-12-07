@@ -42,20 +42,19 @@ stack m (l:ln) = stack m' ln
 
 part1 :: (IntMap [Char],[[Int]]) -> [Char]
 part1 = IntMap.elems . IntMap.mapMaybe listToMaybe . uncurry rearrange
-
-rearrange :: IntMap [Char] -> [[Int]] -> IntMap [Char]
-rearrange m p
-   | null p = m
-   | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (reverse $ take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
-   | otherwise = error "invalid move"
+   where
+   rearrange m p
+      | null p = m
+      | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (reverse $ take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
+      | otherwise = error "invalid move"
 
 -- part 2
 
 part2 :: (IntMap [Char],[[Int]]) -> [Char]
-part2 = IntMap.elems . IntMap.mapMaybe listToMaybe . uncurry rearrange'
-
-rearrange' :: IntMap [Char] -> [[Int]] -> IntMap [Char]
-rearrange' m p
+part2 = IntMap.elems . IntMap.mapMaybe listToMaybe . uncurry rearrange
+   where
+   rearrange :: IntMap [Char] -> [[Int]] -> IntMap [Char]
+   rearrange m p
    | null p = m
-   | ([n,f,t]:ps) <- p = rearrange' (IntMap.insertWith (<>) t (take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
+   | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
    | otherwise = error "invalid move"
