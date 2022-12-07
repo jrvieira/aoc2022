@@ -54,6 +54,6 @@ part2 :: (IntMap [Char],[[Int]]) -> [Char]
 part2 = IntMap.elems . IntMap.mapMaybe listToMaybe . uncurry rearrange
    where
    rearrange m p
-   | null p = m
-   | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
+      | null p = m
+      | ([n,f,t]:ps) <- p = rearrange (IntMap.insertWith (<>) t (take n $ m IntMap.! f) . IntMap.adjust (drop n) f $ m) ps
    | otherwise = error "invalid move"
