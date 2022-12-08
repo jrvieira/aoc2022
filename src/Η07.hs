@@ -46,7 +46,7 @@ dir = go [] Map.empty
 -- part 2
 
 part2 :: [String] -> Int
-part2 cs = head $ sort $ filter (>= need) $ Map.elems fs
+part2 cs = minimum $ filter (>= need) $ Map.elems fs
    where
    need = 30000000 - free
    free = 70000000 - fs Map.! ["/"]
