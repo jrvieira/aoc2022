@@ -2,7 +2,7 @@ module Η07 where
 
 import Zero.Zero
 
-import Data.List ( tails, sort )
+import Data.List ( tails )
 import Data.Char ( isDigit )
 import Data.Map.Lazy ( Map )
 import Data.Map qualified as Map
