@@ -34,7 +34,7 @@ parse = go (0,0) . map words . lines
 -- part 1
 
 part1 :: [(Int,Int)] -> Int
-part1 = length . nub . init . scanl (><) (0,0)
+part1 = length . nub . tail . scanl (><) (0,0)
 
 (><) :: (Int,Int) -> (Int,Int) -> (Int,Int)
 (x',y') >< (x,y)
