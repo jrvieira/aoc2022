@@ -34,17 +34,20 @@ parse = go (0,0) . map words . lines
 -- part 1
 
 part1 :: [(Int,Int)] -> Int
-part1 = length . nub . tail . scanl (><) (0,0)
+part1 = length . nub . tail . f
 
-(><) :: (Int,Int) -> (Int,Int) -> (Int,Int)
-(x',y') >< (x,y)
-   | abs dx > 1 || abs dy > 1 = (signum dx + x',signum dy + y')
-   | otherwise = (x',y')
+f :: [(Int,Int)] -> [(Int,Int)]
+f = tail . scanl (><) (0,0)
    where
-   dx = x - x'
-   dy = y - y'
+   (><) :: (Int,Int) -> (Int,Int) -> (Int,Int)
+   (x',y') >< (x,y)
+      | abs dx > 1 || abs dy > 1 = (signum dx + x',signum dy + y')
+      | otherwise = (x',y')
+      where
+      dx = x - x'
+      dy = y - y'
 
 -- part 2
 
 part2 :: [(Int,Int)] -> Int
-part2 = length . nub . (!! 9) . iterate (tail . scanl (><) (0,0))
+part2 = length . nub . (!! 9) . iterate f
