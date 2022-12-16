@@ -68,7 +68,7 @@ function run (data) {
    let records = {}
 
    for (let member of $(data.members)) {
-      members.push(member.name)
+      members.push({name: member.name || "#"+member.id, id: member.id})
       for (let day in member.completion_day_level) {
 
          records[day] = records[day] || {}
@@ -83,15 +83,15 @@ function run (data) {
 
          if (p1) {
             let t = p1.get_star_ts - release
-            records[day][1][member.name] = format(t)
+            records[day][1][member.id] = format(t)
          }
          if (p2) {
             let t = p2.get_star_ts - release
-            records[day][2][member.name] = format(t)
+            records[day][2][member.id] = format(t)
          }
          if (p1 && p2) {
             let t = p2.get_star_ts - p1.get_star_ts
-            records[day]['delta'][member.name] = format(t)
+            records[day]['delta'][member.id] = format(t)
          }
       }
    }
@@ -112,7 +112,7 @@ function run (data) {
    for (let member of members) {
       header += ''.padStart(mgn,' ')
       header += k[ki]
-      header += member.substring(0,6).padStart(11,' ')
+      header += member.name.substring(0,6).padStart(11,' ')
       header += nok
       ki ++
    }
@@ -126,13 +126,13 @@ function run (data) {
       print += '\n' + day.padStart(2,' ')
       for (let member of members) {
          print += ''.padStart(mgn,' ')
-         print += (records[day] && records[day][1] && records[day][1][member] || '').padStart(11,' ')
+         print += (records[day] && records[day][1] && records[day][1][member.id] || '').padStart(11,' ')
       }
 
       print += '\n' + ''.padStart(2,' ')
       for (let member of members) {
          print += ''.padStart(mgn,' ')
-         print += (records[day] && records[day][2] && records[day][2][member] || '').padStart(11,' ')
+         print += (records[day] && records[day][2] && records[day][2][member.id] || '').padStart(11,' ')
       }
 
       print += '\n' + ''.padStart(2,' ')
@@ -140,7 +140,7 @@ function run (data) {
       for (let member of members) {
          print += ''.padStart(mgn,' ')
          print += k[ki]
-         print += (records[day] && records[day]['delta'] && records[day]['delta'][member] || '').padStart(11,' ')
+         print += (records[day] && records[day]['delta'] && records[day]['delta'][member.id] || '').padStart(11,' ')
          print += nok
          ki ++
       }
