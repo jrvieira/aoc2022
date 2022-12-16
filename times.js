@@ -96,7 +96,7 @@ function run (data) {
       }
    }
 
-   let colorcodes = [31,32,33,34,35,36,91,92,93,94,95,96]
+   let colorcodes = [31,32,33,34,35,36]
    let k = colorcodes.map( c => '\x1b['+c+'m' )
    let nok = '\x1b[0m'
 
@@ -111,7 +111,7 @@ function run (data) {
    let ki = 0
    for (let member of members) {
       header += ''.padStart(mgn,' ')
-      header += k[ki]
+      header += k[ki%k.length]
       header += member.name.substring(0,6).padStart(11,' ')
       header += nok
       ki ++
@@ -139,7 +139,7 @@ function run (data) {
       let ki = 0
       for (let member of members) {
          print += ''.padStart(mgn,' ')
-         print += k[ki]
+         print += k[ki%k.length]
          print += (records[day] && records[day]['delta'] && records[day]['delta'][member.id] || '').padStart(11,' ')
          print += nok
          ki ++
