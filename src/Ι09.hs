@@ -38,14 +38,14 @@ part1 = length . nub . tail . f
 
 f :: [(Int,Int)] -> [(Int,Int)]
 f = tail . scanl (><) (0,0)
+
+(><) :: (Int,Int) -> (Int,Int) -> (Int,Int)
+(x',y') >< (x,y)
+   | abs dx > 1 || abs dy > 1 = (signum dx + x',signum dy + y')
+   | otherwise = (x',y')
    where
-   (><) :: (Int,Int) -> (Int,Int) -> (Int,Int)
-   (x',y') >< (x,y)
-      | abs dx > 1 || abs dy > 1 = (signum dx + x',signum dy + y')
-      | otherwise = (x',y')
-      where
-      dx = x - x'
-      dy = y - y'
+   dx = x - x'
+   dy = y - y'
 
 -- part 2
 
