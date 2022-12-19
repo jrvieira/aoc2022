@@ -20,6 +20,7 @@ executable aoc2022
       , ansi-terminal-game == 1.8.0.0
       , containers
       , split
+      , search-algorithms
 
    other-modules: Zero.Zero
       , Zero.Color
