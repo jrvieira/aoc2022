@@ -47,9 +47,9 @@ part1 s = S.size (pour s) - S.size s
 -- part 2
 
 part2 :: Set (Int,Int) -> Int
-part2 s = length $ concat $ scanl sim [(500,0)] $ depth <$> [1..succ abyss]
+part2 s = length $ concat $ scanl sim [(500,0)] steps
    where
-   abyss = S.findMax $ S.map snd s
-   depth d = filter (∉ s) $ (,d) . (+ 500) <$> [-d..d]
+   steps = depth <$> [1..succ $ S.findMax $ S.map snd s]
+   depth d = filter (∉ s) $ (,d) . (+ 500) <$> [negate d..d]
    sim a = filter $ \(x,y) -> or [ (x',pred y) ∈ a | x' <- [pred x..succ x] ]
 
