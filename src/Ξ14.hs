@@ -50,8 +50,6 @@ part2 :: Set (Int,Int) -> Int
 part2 s = length $ concat $ scanl sim [(500,0)] $ depth <$> [1..succ abyss]
    where
    abyss = S.findMax $ S.map snd s
-   depth d = filter (∉ s) $ (,d) . (+ 500) <$> [negate d..d]
-   sim a = filter f
-      where
-      f (x',y') = or [ (x,pred y') ∈ a | x <- [pred x'..succ x'] ]
+   depth d = filter (∉ s) $ (,d) . (+ 500) <$> [-d..d]
+   sim a = filter $ \(x,y) -> or [ (x',pred y) ∈ a | x' <- [pred x..succ x] ]
 
