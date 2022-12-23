@@ -24,6 +24,7 @@ executable aoc2022
 
    other-modules: Zero.Zero
       , Zero.Color
+      , Zero.Echo
       , Α01, Β02, Γ03, Δ04
       , Ε05, Ζ06, Η07, Θ08
       , Ι09, Κ10, Λ11, Μ12
