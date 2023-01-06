@@ -21,6 +21,7 @@ executable aoc2022
       , containers
       , split
       , search-algorithms
+      , combinatorial
 
    other-modules: Zero.Zero
       , Zero.Color

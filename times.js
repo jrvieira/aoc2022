@@ -63,7 +63,95 @@ function format (t) {
 
 function run (data) {
 
-   console.log(data)
+   let $ = Object.values
+   let members = []
+   let records = {}
+
+   for (let member of $(data.members)) {
+      members.push({name: member.name || "#"+member.id, id: member.id})
+      for (let day in member.completion_day_level) {
+
+         records[day] = records[day] || {}
+         records[day][1] = records[day][1] || {}
+         records[day][2] = records[day][2] || {}
+         records[day]['delta'] = records[day]['delta'] || {}
+
+         let p1 = $(member.completion_day_level[day])[0] || null
+         let p2 = $(member.completion_day_level[day])[1] || null
+
+         let release = +new Date(day+' Dec '+y) / 1000 //+ (5*60*60) // aoc starts at 5:00'00 UTC
+
+         if (p1) {
+            let t = p1.get_star_ts - release
+            records[day][1][member.id] = format(t)
+         }
+         if (p2) {
+            let t = p2.get_star_ts - release
+            records[day][2][member.id] = format(t)
+         }
+         if (p1 && p2) {
+            let t = p2.get_star_ts - p1.get_star_ts
+            records[day]['delta'][member.id] = format(t)
+         }
+      }
+   }
+
+   let colorcodes = [31,32,33,34,35,36]
+   let k = colorcodes.map( c => '\x1b['+c+'m' )
+   let nok = '\x1b[0m'
+
+   let print = ''
+
+   const mgn = 1
+
+   let header = ''
+
+   header += '\n' + ''.padStart(2,' ')
+
+   let ki = 0
+   for (let member of members) {
+      header += ''.padStart(mgn,' ')
+      header += k[ki%k.length]
+      header += member.name.substring(0,6).padStart(11,' ')
+      header += nok
+      ki ++
+   }
+
+   header += '\n'
+
+   print += header
+
+   for (let day in records) {
+
+      print += '\n' + day.padStart(2,' ')
+      for (let member of members) {
+         print += ''.padStart(mgn,' ')
+         print += (records[day] && records[day][1] && records[day][1][member.id] || '').padStart(11,' ')
+      }
+
+      print += '\n' + ''.padStart(2,' ')
+      for (let member of members) {
+         print += ''.padStart(mgn,' ')
+         print += (records[day] && records[day][2] && records[day][2][member.id] || '').padStart(11,' ')
+      }
+
+      print += '\n' + ''.padStart(2,' ')
+      let ki = 0
+      for (let member of members) {
+         print += ''.padStart(mgn,' ')
+         print += k[ki%k.length]
+         print += (records[day] && records[day]['delta'] && records[day]['delta'][member.id] || '').padStart(11,' ')
+         print += nok
+         ki ++
+      }
+
+      print += '\n'
+      print += ' '
+   }
+
+   print += header
+
+   console.log(print)
 
 }
 
